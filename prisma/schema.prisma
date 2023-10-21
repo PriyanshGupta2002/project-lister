@@ -27,6 +27,7 @@ model User {
   followers        String[]
   following        String[]
   comments         Comment[]
+  hashedPassword   String?
 }
 
 model Project {

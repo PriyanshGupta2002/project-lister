@@ -88,7 +88,7 @@ const LoginModal = () => {
           Signin with Google <FcGoogle size={24} />
         </button>
         <button
-          className="flex items-center p-4 gap-4  text-neutral-400 bg-black  hover:text-white transition rounded-md"
+          className="flex items-center p-4 gap-4  text-neutral-400 border-2 border-neutral-300 bg-black  hover:text-white transition rounded-md"
           onClick={() => {
             signIn("github");
             onClose();
@@ -99,7 +99,7 @@ const LoginModal = () => {
         </button>
       </div>
       <small className="text-neutral-400 p-3">
-        Don't have an account yet?{" "}
+        Don&apos;t have an account yet?{" "}
         <span
           className="text-white text-base cursor-pointer hover:text-rose-500 transition"
           onClick={toggleToRegisterModal}

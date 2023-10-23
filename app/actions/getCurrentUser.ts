@@ -16,6 +16,9 @@ export const getCurrentUser = async () => {
       where: {
         email: session.user.email,
       },
+      include: {
+        Projects: true,
+      },
     });
     if (!currentUser) {
       return null;

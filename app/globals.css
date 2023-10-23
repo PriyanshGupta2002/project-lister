@@ -21,3 +21,24 @@ body{
 .under:hover::after{
   transform: scaleX(1);
 }
+
+.textCol{
+  color: rgb(231, 233, 234);
+}
+
+.container-class{
+  padding: 0px 40px;
+  overflow-x: auto;
+}
+
+/* Style individual carousel items */
+/* .carousel-item {
+  width: 100%;
+} */
+
+.react-multi-carousel-item {
+  margin: 0px 10px; /* Adjust this value as needed */
+}
+.custom-slide {
+  margin: 0 10px; /* Adjust the margin as needed for the desired gap */
+}

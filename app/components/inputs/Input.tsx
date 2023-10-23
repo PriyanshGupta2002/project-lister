@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({
       />
       <label
         htmlFor=""
-        className={`transition-all  absolute top-1 left-2 text-blue-600 text-xs peer-placeholder-shown:text-base  peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:top-5 peer-placeholder-shown:left-3 peer-focus:top-1 peer-focus:left-2 peer-focus:text-xs peer-focus:text-blue-600 ${
+        className={`transition-all  absolute z-10  top-1 left-2 text-blue-600 text-xs peer-placeholder-shown:text-base  peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:top-5 peer-placeholder-shown:left-3 peer-focus:top-1 peer-focus:left-2 peer-focus:text-xs peer-focus:text-blue-600 ${
           !!errors[id] ? "text-rose-500" : "text-neutral-600"
         }`}
       >

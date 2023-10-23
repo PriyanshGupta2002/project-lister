@@ -19,7 +19,7 @@ const Search = () => {
     resetField("search");
   });
   return (
-    <div className="max-w-7xl m-auto my-4 relative">
+    <div className="max-w-7xl m-auto mb-4 relative">
       <Input
         errors={errors}
         id="search"

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { SafeProject } from "../types";
 
 interface ProjectProps {
   isOpen: boolean;

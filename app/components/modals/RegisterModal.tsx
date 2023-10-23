@@ -81,9 +81,9 @@ const RegisterModal = () => {
   );
   const footer = (
     <div className="flex flex-col space-y-5">
-      <div className="flex items-center gap-3 p-4 flex-wrap">
+      <div className="flex justify-center items-center gap-3 p-4 flex-wrap">
         <button
-          className="flex-1 text-neutral-700  gap-4 bg-gray-300 py-3 transition rounded-md opacity-75 hover:opacity-100  flex items-center justify-center"
+          className="text-neutral-700  gap-4 bg-gray-300  p-4 transition rounded-md opacity-75 hover:opacity-100  flex items-center"
           onClick={() => {
             signIn("google");
             onClose();
@@ -92,7 +92,7 @@ const RegisterModal = () => {
           Signin with Google <FcGoogle size={24} />
         </button>
         <button
-          className="flex-1 flex items-center gap-4 justify-center text-neutral-400 bg-black py-3 hover:text-white transition rounded-md"
+          className="flex items-center p-4 gap-4  text-neutral-400 bg-black  hover:text-white transition rounded-md"
           onClick={() => {
             signIn("github");
             onClose();
@@ -106,7 +106,7 @@ const RegisterModal = () => {
       <small className="text-neutral-400 p-3">
         Already have an account?{" "}
         <span
-          className="text-neutral-600 text-base cursor-pointer hover:text-rose-500 transition"
+          className="text-white text-base cursor-pointer hover:text-rose-500 transition"
           onClick={toggleToLoginModal}
         >
           Login Now

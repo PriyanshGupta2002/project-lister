@@ -25,15 +25,15 @@ const Input: React.FC<InputProps> = ({
       <input
         {...register(id, { required })}
         type={type || "text"}
-        className={`h-16 border-2 p-3 peer w-fulloutline-none rounded-md placeholder-transparent placeholder:text-base   ${
+        className={`h-16 border-2 p-3 outline-none text-black peer w-fulloutline-none rounded-md placeholder-transparent placeholder:text-base   ${
           errors[id] ? "border-rose-500" : "border-neutral-300"
         }
-        ${errors[id] ? "focus:border-rose-500" : "focus:border-black"}`}
+        ${errors[id] ? "focus:border-rose-500" : "focus:border-blue-600"}`}
         placeholder={placeholder || ""}
       />
       <label
         htmlFor=""
-        className={`transition-all  absolute top-1 left-2 text-neutral-600 text-sm peer-placeholder-shown:text-base  peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:top-5 peer-placeholder-shown:left-3 peer-focus:top-1 peer-focus:left-2 peer-focus:text-sm peer-focus:text-neutral-600 ${
+        className={`transition-all  absolute top-1 left-2 text-blue-600 text-xs peer-placeholder-shown:text-base  peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:top-5 peer-placeholder-shown:left-3 peer-focus:top-1 peer-focus:left-2 peer-focus:text-xs peer-focus:text-blue-600 ${
           !!errors[id] ? "text-rose-500" : "text-neutral-600"
         }`}
       >

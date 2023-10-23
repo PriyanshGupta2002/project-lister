@@ -3,7 +3,21 @@
 @tailwind utilities;
 
 body{
-  /* background-color: #101418;
+  background-color: #101418;
   color: white;
-   */
+  
+}
+
+.under::after{
+  content: "";
+  display: block;
+  height: 4px;
+  width: auto;
+  background-color: rgb(244 63 94);
+  transform: scale(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.under:hover::after{
+  transform: scaleX(1);
 }

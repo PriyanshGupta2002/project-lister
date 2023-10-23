@@ -6,6 +6,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import { Toaster } from "react-hot-toast";
 import { getCurrentUser } from "./actions/getCurrentUser";
 import LoginModal from "./components/modals/LoginModal";
+import AddProjectModal from "./components/modals/AddProjectModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <RegisterModal />
+        <AddProjectModal />
         <LoginModal />
         <Toaster />
         <Navbar currentUser={currentUser} />
+        <hr />
         {children}
       </body>
     </html>

@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { BsGithub, BsGoogle } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
 import { IoMdClose } from "react-icons/io";
 interface ModalProps {
   isOpen: boolean;
@@ -13,6 +11,8 @@ interface ModalProps {
   title?: string;
   footer?: React.ReactElement;
   disabled?: boolean;
+  secondaryActionLabel?: string;
+  secondaryAction?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -25,42 +25,53 @@ const Modal: React.FC<ModalProps> = ({
   title,
   footer,
   disabled,
+  secondaryAction,
+  secondaryActionLabel,
 }) => {
   return (
     <div
-      className={`fixed bg-slate-900/40 duration-200 backdrop-blur-sm ease-linear w-full h-full transition-all z-10 flex items-center justify-center ${
-        isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+      className={`fixed bg-slate-900/40 duration-200 backdrop-blur-sm z-20 ease-linear w-full h-full transition-all flex items-center justify-center ${
+        isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
       }
      `}
     >
       <div
-        className={`w-full bg-neutral-100 rounded-t-xl md:w-2/4 lg:w-1/2 xl:w-2/5 h-full md:h-auto transition-opacity`}
+        className={`w-full overflow-y-auto bg-slate-300/10 backdrop-blur-sm rounded-t-xl md:w-2/4 lg:w-1/2 xl:w-2/5 h-full md:h-auto transition-opacity`}
       >
         <div className="flex items-center p-3">
           <IoMdClose
-            color="black"
+            color="white"
             size={23}
             className="cursor-pointer"
             onClick={onClose}
           />
           {title && (
-            <div className="text-neutral-700 mx-auto text-xl font-bold">
-              {title}
-            </div>
+            <div className="text-white mx-auto text-xl font-bold">{title}</div>
           )}
         </div>
         <hr className="border-[1.5px] border-neutral-200" />
         {body}
-        <div className="w-full p-3 flex items-center">
+        <div className="w-full p-3 flex items-center gap-3 justify-between flex-wrap">
+          {secondaryActionLabel && (
+            <button
+              onClick={secondaryAction}
+              disabled={disabled}
+              className={`bg-gray-400/50 text-white p-3 px-24 rounded-md disabled:cursor-not-allowed disabled:bg-rose-400`}
+            >
+              {secondaryActionLabel}
+            </button>
+          )}
           <button
             onClick={onSubmit}
             disabled={disabled}
-            className={`bg-rose-600 text-white p-3 w-full rounded-md disabled:cursor-not-allowed disabled:bg-rose-400`}
+            className={`bg-rose-600 text-white p-3 px-24 rounded-md disabled:cursor-not-allowed disabled:bg-rose-400 ${
+              !secondaryActionLabel && "w-full"
+            }`}
           >
             {primaryActionLabel}
           </button>
         </div>
-        <hr className="border-[1.5px] border-neutral-200 my-4" />
+        {footer && <hr className="border-[1.5px] border-neutral-200 my-4" />}
         {footer}
       </div>
     </div>

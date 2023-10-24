@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
      `}
     >
       <div
-        className={`w-full overflow-y-auto bg-black backdrop-blur-sm rounded-t-xl md:w-2/4 lg:w-1/2 xl:w-2/5
+        className={`w-full overflow-y-auto bg-black/50 backdrop-blur-sm rounded-t-xl md:w-2/4 lg:w-1/2 xl:w-2/5
          h-full md:h-auto transition-opacity`}
       >
         <div className="flex items-center p-3">

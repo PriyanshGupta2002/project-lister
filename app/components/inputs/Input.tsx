@@ -21,11 +21,11 @@ const Input: React.FC<InputProps> = ({
   id,
 }) => {
   return (
-    <div className="flex flex-col relative ">
+    <div className="flex flex-col relative w-full ">
       <input
         {...register(id, { required })}
         type={type || "text"}
-        className={`h-16 border-2 p-3 outline-none text-black peer w-fulloutline-none rounded-md placeholder-transparent placeholder:text-base   ${
+        className={`h-16 border-2 p-3  text-black peer outline-none rounded-md placeholder-transparent placeholder:text-base   ${
           errors[id] ? "border-rose-500" : "border-neutral-300"
         }
         ${errors[id] ? "focus:border-rose-500" : "focus:border-blue-600"}`}

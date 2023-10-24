@@ -91,7 +91,7 @@ const AddProjectModal = () => {
       />
     </div>
   );
-  const handleGptRes = async () => {
+  const handleGptRes = useCallback(async () => {
     const gptValue = getValues("gptDesc");
     if (!gptValue) {
       return toast.error("Give prompt to generate description");
@@ -109,7 +109,7 @@ const AddProjectModal = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getValues, resetField, setValue]);
   if (step === STEPS.INFO) {
     body = (
       <div className="flex flex-col p-3 mt-6 space-y-7">

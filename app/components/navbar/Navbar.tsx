@@ -10,7 +10,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <header className="p-4">
-      <nav className="flex items-center justify-between max-w-7xl m-auto">
+      <nav className="flex items-center justify-between max-w-7xl m-auto flex-wrap">
         <Link
           href={"/"}
           className="text-3xl  cursor-pointer bg-gradient-to-r from-blue-500 to-cyan-500 font-bold bg-clip-text text-transparent"

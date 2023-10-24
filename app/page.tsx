@@ -9,7 +9,7 @@ const page = async () => {
   const projects = (await getProjects()) as (SafeProject & {
     user: SafeUser;
   })[];
-  const currentUser = await getCurrentUser();
+  const currentUser = (await getCurrentUser()) as SafeUser;
   return (
     <>
       <Search />

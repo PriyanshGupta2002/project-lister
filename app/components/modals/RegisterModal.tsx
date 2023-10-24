@@ -33,21 +33,26 @@ const RegisterModal = () => {
     loginModal.onOpen();
   };
 
-  const onSubmit = handleSubmit(async (formValues) => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.post("/api/register", {
-        ...formValues,
-      });
-      toast.success(data.message);
-      loginModal.onOpen();
-      onClose();
-    } catch (error: any) {
-      toast.error(error.response.data.message || "Some error occured");
-    } finally {
-      setIsLoading(false);
-    }
-  });
+  const onSubmit = handleSubmit(
+    useCallback(
+      async (formValues) => {
+        try {
+          setIsLoading(true);
+          const { data } = await axios.post("/api/register", {
+            ...formValues,
+          });
+          toast.success(data.message);
+          loginModal.onOpen();
+          onClose();
+        } catch (error: any) {
+          toast.error(error.response.data.message || "Some error occured");
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      [loginModal, onClose]
+    )
+  );
   const body = (
     <div className="p-2 my-3 flex flex-col gap-3">
       <Input

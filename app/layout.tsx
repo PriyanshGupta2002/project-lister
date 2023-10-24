@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { getCurrentUser } from "./actions/getCurrentUser";
 import LoginModal from "./components/modals/LoginModal";
 import AddProjectModal from "./components/modals/AddProjectModal";
+import { SafeUser } from "./types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
+  const currentUser = (await getCurrentUser()) as SafeUser;
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} bg-gradient-to-br from-black/20 to to-slate-800  `}
+      >
         <RegisterModal />
         <AddProjectModal />
         <LoginModal />

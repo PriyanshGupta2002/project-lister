@@ -1,10 +1,13 @@
 "use client";
 
+import { useLogin } from "@/app/hooks/useLogin";
 import { SafeProject, SafeUser } from "@/app/types";
 import { giveDate } from "@/app/utils/giveDate";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
+import toast from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { PiUserSquareThin } from "react-icons/pi";
 interface ProjectCardProps {
@@ -15,8 +18,12 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
-  const date = giveDate(project.createdAt);
-  const isFavorite = false;
+  const date = useMemo(() => {
+    return giveDate(project.createdAt);
+  }, [project.createdAt]);
+  const isFavorite = useMemo(() => {
+    return currentUser?.favoriteProjects.includes(project.id);
+  }, [currentUser?.favoriteProjects, project.id]);
   const router = useRouter();
 
   const handleProjectDetail = useCallback(
@@ -24,6 +31,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
       router.push(`/project/${id}`);
     },
     [router]
+  );
+  const loginModal = useLogin();
+
+  const handleFavorite = useCallback(
+    async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      e.stopPropagation();
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
+      try {
+        const { data } = await axios.get(`/api/favorite/${project.id}`);
+        router.refresh();
+        toast.success(data.message);
+      } catch (error) {
+        toast.error("Some error occured");
+      }
+    },
+    [currentUser, loginModal, project.id, router]
   );
   return (
     <div
@@ -41,15 +66,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
         {isFavorite ? (
           <AiFillHeart
             size={25}
-            className="absolute right-3 z-10 top-3 text-rose-500"
+            className="absolute right-3 z-1 top-3 text-rose-500"
+            onClick={handleFavorite}
           />
         ) : (
-          <AiOutlineHeart size={25} className="absolute right-3 z-1 top-3" />
+          <AiOutlineHeart
+            size={25}
+            className="absolute right-3 z-1 top-3"
+            onClick={handleFavorite}
+          />
         )}
       </div>
       <div className="flex flex-col gap-4 p-3">
         <div className="flex flex-row justify-between flex-wrap gap-4 ">
-          <span className="text-xl textCol font-bold">
+          <span className="text-base   lg:text-base textCol font-bold">
             {project.projectTitle}
           </span>
           <div className="flex items-center flex-wrap gap-2">
@@ -71,7 +101,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
             </div>
           </div>
         </div>
-        <span className="text-sm text-neutral-300">{date}</span>
+        <span className=" text-xs  text-neutral-300">{date}</span>
       </div>
     </div>
   );

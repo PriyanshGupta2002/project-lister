@@ -6,11 +6,7 @@ interface IParams {
 }
 
 export const getProjectById = async (params: IParams) => {
-  const cuurentUser = await getCurrentUser();
   const { id } = params;
-  if (!cuurentUser) {
-    return null;
-  }
   if (!id || typeof id !== "string") {
     return null;
   }

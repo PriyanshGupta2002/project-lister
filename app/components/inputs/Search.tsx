@@ -19,7 +19,7 @@ const Search = () => {
     resetField("search");
   });
   return (
-    <div className="max-w-7xl m-auto mb-4 relative">
+    <div className="max-w-7xl m-auto mb-4 relative p-5">
       <Input
         errors={errors}
         id="search"
@@ -33,7 +33,7 @@ const Search = () => {
         title="Search"
         type="submit"
         onClick={onSubmit}
-        className="absolute  top-4 rounded-md  right-2 bg-rose-500  py-2 px-3 text-white  hover:bg-red-600 transition group"
+        className="absolute  top-[34%] -translate-x-1/2 rounded-md  right-2 bg-rose-500  py-2 px-3 text-white  hover:bg-red-600 transition group"
       >
         <AiOutlineSend
           className="group-hover:-rotate-45 transition"

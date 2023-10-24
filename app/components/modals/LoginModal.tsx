@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Modal from "./Modal";
 
 import Input from "../inputs/Input";
@@ -28,26 +28,31 @@ const LoginModal = () => {
   const loginModal = useLogin();
   const router = useRouter();
   const registerModal = useRegister();
-  const onSubmit = handleSubmit(async (formValues) => {
-    try {
-      setIsLoading(true);
-      const res = await signIn("credentials", {
-        ...formValues,
-        redirect: false,
-      });
-      if (res?.error) {
-        toast.error(res.error);
-        return;
-      }
-      toast.success("Logged In");
-      loginModal.onClose();
-      router.refresh();
-    } catch (error: any) {
-      toast.error(error.response.data.message || "Some error occured");
-    } finally {
-      setIsLoading(false);
-    }
-  });
+  const onSubmit = handleSubmit(
+    useCallback(
+      async (formValues) => {
+        try {
+          setIsLoading(true);
+          const res = await signIn("credentials", {
+            ...formValues,
+            redirect: false,
+          });
+          if (res?.error) {
+            toast.error(res.error);
+            return;
+          }
+          toast.success("Logged In");
+          loginModal.onClose();
+          router.refresh();
+        } catch (error: any) {
+          toast.error(error.response.data.message || "Some error occured");
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      [loginModal, router]
+    )
+  );
   const toggleToRegisterModal = () => {
     loginModal.onClose();
     registerModal.onOpen();

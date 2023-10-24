@@ -5,6 +5,7 @@ import { useRegister } from "@/app/hooks/useRegister";
 import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx"; // I used RiHamburgerMenuLine for the hamburger menu icon
@@ -17,6 +18,7 @@ const NavUserMenu: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const { onOpen } = useRegister();
   const loginModal = useLogin();
   const projectModal = useProject();
+  const router = useRouter();
   return (
     <div className="relative  p-2 gap-5 border-2 border-neutral-400 cursor-pointer flex items-center rounded-full">
       {currentUser?.image ? (
@@ -54,6 +56,7 @@ const NavUserMenu: React.FC<CurrentUserProps> = ({ currentUser }) => {
               <div className="hover:text-rose-400  transition under">
                 My Projects
               </div>
+              <hr />
               <div
                 className="hover:text-rose-400  transition under"
                 onClick={() => signOut()}

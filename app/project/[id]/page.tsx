@@ -5,8 +5,10 @@ import Heading from "@/app/components/Heading";
 import { SimpleSlider } from "@/app/components/Carousel";
 import ProjectBody from "@/app/components/projects/ProjectBody";
 import ProjectHeader from "@/app/components/projects/ProjectHeader";
-import { SafeProject, SafeUser } from "@/app/types";
+import { SafeComment, SafeProject, SafeUser } from "@/app/types";
 import React from "react";
+import ProjectCommentSection from "@/app/components/projects/ProjectCommentSection";
+import { getCommentsByProjectId } from "@/app/actions/getCommentsByProjectId";
 interface IParams {
   id: string;
 }
@@ -17,7 +19,11 @@ const page = async ({ params }: { params: IParams }) => {
   const userProjects = (await getUserProjects({ userId })) as (SafeProject & {
     user: SafeUser;
   })[];
+
   const currentUser = (await getCurrentUser()) as SafeUser;
+  const comments = (await getCommentsByProjectId({ id })) as (SafeComment & {
+    User: SafeUser;
+  })[];
   return (
     <div className="max-w-7xl m-auto mt-4 p-3">
       <ProjectHeader
@@ -26,6 +32,8 @@ const page = async ({ params }: { params: IParams }) => {
         publishedDate={projectDetail?.createdAt as string}
         sourceCodeLink={projectDetail?.projectLink as string}
         liveUrlLink={projectDetail?.liveProjectLink as string}
+        currentUser={currentUser}
+        projectId={id}
       />
 
       <ProjectBody
@@ -40,25 +48,19 @@ const page = async ({ params }: { params: IParams }) => {
               heading={`More From  ${projectDetail.user.name}`}
               subHeading={`See More Projects made by ${projectDetail.user.name}`}
             />
-            {/* <div className="grid grid-cols-4 gap-5 overflow-auto max-w-5xl m-auto">
-              {userProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  currentUser={currentUser}
-                />
-              ))}
-            </div> */}
-            {/* <SliderCards
-              currentUser={currentUser}
-              userProjects={userProjects}
-            /> */}
+
             <SimpleSlider
               currentUser={currentUser}
               userProjects={userProjects}
             />
           </div>
         )}
+      <hr />
+      <ProjectCommentSection
+        comments={comments}
+        currentUser={currentUser}
+        projectId={id}
+      />
     </div>
   );
 };

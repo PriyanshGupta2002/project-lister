@@ -2,15 +2,25 @@ import primsaClient from "../utils/prismaClient";
 
 interface IParams {
   userId: string;
+  searchText?: string;
 }
 export const getUserProjects = async (params: IParams) => {
-  const { userId } = params;
+  const { userId, searchText } = params;
   if (!userId || typeof userId !== "string") {
     return null;
+  }
+  let query: any = {};
+  if (params.searchText) {
+    const nameOb = {
+      mode: "insensitive",
+      contains: params.searchText,
+    };
+    query.projectTitle = nameOb;
   }
   const projects = await primsaClient.project.findMany({
     where: {
       userId,
+      ...query,
     },
     include: {
       user: true,

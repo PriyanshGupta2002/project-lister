@@ -12,8 +12,18 @@ import { getCommentsByProjectId } from "@/app/actions/getCommentsByProjectId";
 interface IParams {
   id: string;
 }
-const page = async ({ params }: { params: IParams }) => {
+interface SearchParams {
+  filter: "asc" | "desc";
+}
+const page = async ({
+  params,
+  searchParams,
+}: {
+  params: IParams;
+  searchParams: SearchParams;
+}) => {
   const { id } = params;
+  const { filter } = searchParams;
   const projectDetail = await getProjectById({ id });
   const userId = projectDetail?.userId as string;
   const userProjects = (await getUserProjects({ userId })) as (SafeProject & {
@@ -21,7 +31,10 @@ const page = async ({ params }: { params: IParams }) => {
   })[];
 
   const currentUser = (await getCurrentUser()) as SafeUser;
-  const comments = (await getCommentsByProjectId({ id })) as (SafeComment & {
+  const comments = (await getCommentsByProjectId({
+    id,
+    filter,
+  })) as (SafeComment & {
     User: SafeUser;
   })[];
   return (

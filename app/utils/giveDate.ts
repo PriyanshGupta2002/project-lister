@@ -1,3 +1,4 @@
+import moment from "moment";
 const options: Intl.DateTimeFormatOptions = {
   weekday: "short",
   year: "numeric",
@@ -7,4 +8,8 @@ const options: Intl.DateTimeFormatOptions = {
 
 export const giveDate = (date: string) => {
   return new Date(date).toLocaleString("en-US", options);
+};
+
+export const daysAgo = (date: string) => {
+  return moment(date).fromNow();
 };

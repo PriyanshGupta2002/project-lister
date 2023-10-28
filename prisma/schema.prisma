@@ -70,6 +70,6 @@ model Comment {
   message   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Project   Project  @relation(fields: [projectId], references: [id])
-  User      User     @relation(fields: [userId], references: [id])
+  Project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -10,6 +10,7 @@ interface InputProps {
   errors: FieldErrors;
   id: string;
   required?: boolean;
+  actionOnEnterKey?: () => void;
 }
 const Input: React.FC<InputProps> = ({
   placeholder,
@@ -19,10 +20,18 @@ const Input: React.FC<InputProps> = ({
   register,
   required,
   id,
+  actionOnEnterKey,
 }) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && actionOnEnterKey) {
+      actionOnEnterKey();
+      return;
+    }
+  };
   return (
     <div className="flex flex-col relative w-full ">
       <input
+        onKeyDown={handleKeyDown}
         {...register(id, { required })}
         type={type || "text"}
         className={`h-16 border-2 p-3  text-black peer outline-none rounded-md placeholder-transparent placeholder:text-base   ${

@@ -8,7 +8,8 @@ import { getCurrentUser } from "./actions/getCurrentUser";
 import LoginModal from "./components/modals/LoginModal";
 import AddProjectModal from "./components/modals/AddProjectModal";
 import { SafeUser } from "./types";
-
+import Search from "./components/inputs/Search";
+import NextTopLoader from "nextjs-toploader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,13 +26,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gradient-to-br from-black/20 to to-slate-800  `}
+        className={`${inter.className} bg-black  bg-gradient-to-br text-white from-black/20  to-slate-800 `}
       >
         <RegisterModal />
         <AddProjectModal />
         <LoginModal />
         <Toaster />
         <Navbar currentUser={currentUser} />
+        <Search />
+        <hr />
+        <NextTopLoader />
         {children}
       </body>
     </html>

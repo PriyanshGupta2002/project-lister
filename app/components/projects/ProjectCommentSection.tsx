@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import { FieldValues, useForm } from "react-hook-form";
@@ -8,8 +8,9 @@ import { SafeComment, SafeUser } from "@/app/types";
 import { useLogin } from "@/app/hooks/useLogin";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CommentCard from "./CommentCard";
+import Filter from "../inputs/Filter";
 
 interface ProjectCommentSectionProps {
   currentUser?: SafeUser;
@@ -60,9 +61,23 @@ const ProjectCommentSection: React.FC<ProjectCommentSectionProps> = ({
       [currentUser, loginModal, projectId, reset, router]
     )
   );
+
+  const [filterOp, setFilterOp] = useState("");
+  const path = usePathname();
+  console.log(path);
+  useEffect(() => {
+    if (filterOp) {
+      router.push(`${path}?filter=${filterOp}`);
+    }
+  }, [router, filterOp, path]);
+
   return (
-    <div className="my-4">
-      <Heading heading="Comments" subHeading="Engage and Share 😊" />
+    <div className="my-4 flex flex-col">
+      <div className="flex items-center justify-between">
+        <Heading heading="Comments" subHeading="Engage and Share 😊" />
+        <Filter onChange={(value) => setFilterOp(value)} value={filterOp} />
+      </div>
+
       <div className="flex flex-col space-y-4">
         <div className="flex md:items-center p-2 w-full gap-4 md:flex-row flex-col items-start">
           <Input
@@ -73,6 +88,7 @@ const ProjectCommentSection: React.FC<ProjectCommentSectionProps> = ({
             placeholder="comment"
             required
             type="text"
+            actionOnEnterKey={onSubmit}
           />
           <button
             type="submit"

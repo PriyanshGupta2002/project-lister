@@ -19,6 +19,10 @@ const NavUserMenu: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const loginModal = useLogin();
   const projectModal = useProject();
   const router = useRouter();
+  const handleRouting = (route: string) => {
+    router.push(route);
+    setOpenMenu(false);
+  };
   return (
     <div className="relative  p-2 gap-5 border-2 border-neutral-400 cursor-pointer flex items-center rounded-full">
       {currentUser?.image ? (
@@ -50,10 +54,16 @@ const NavUserMenu: React.FC<CurrentUserProps> = ({ currentUser }) => {
               >
                 Add Your Project
               </div>
-              <div className="hover:text-rose-400  transition under">
+              <div
+                className="hover:text-rose-400  transition under"
+                onClick={() => handleRouting("/favorite")}
+              >
                 Favorite Projects
               </div>
-              <div className="hover:text-rose-400  transition under">
+              <div
+                className="hover:text-rose-400  transition under"
+                onClick={() => handleRouting("/my-projects")}
+              >
                 My Projects
               </div>
               <hr />

@@ -145,6 +145,7 @@ const AddProjectModal = () => {
             placeholder="Generate Description"
             register={register}
             errors={errors}
+            actionOnEnterKey={handleGptRes}
           />
           <button
             title="Search"

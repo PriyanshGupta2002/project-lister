@@ -2,10 +2,11 @@ import primsaClient from "../utils/prismaClient";
 
 interface IParams {
   id: string;
+  filter?: "asc" | "desc";
 }
 
 export const getCommentsByProjectId = async (params: IParams) => {
-  const { id } = params;
+  const { id, filter } = params;
   try {
     if (!id || typeof id !== "string") {
       throw new Error("Invalid Id");
@@ -15,7 +16,7 @@ export const getCommentsByProjectId = async (params: IParams) => {
         projectId: id,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: filter || "desc",
       },
       include: {
         User: true,

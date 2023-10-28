@@ -6,7 +6,7 @@ import { giveDate } from "@/app/utils/giveDate";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { PiUserSquareThin } from "react-icons/pi";
@@ -15,9 +15,14 @@ interface ProjectCardProps {
     user: SafeUser;
   };
   currentUser?: SafeUser;
+  deleteActionLabel?: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  project,
+  currentUser,
+  deleteActionLabel,
+}) => {
   const date = useMemo(() => {
     return giveDate(project.createdAt);
   }, [project.createdAt]);
@@ -32,6 +37,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
     },
     [router]
   );
+  const [deletingId, setDeletingId] = useState("");
   const loginModal = useLogin();
 
   const handleFavorite = useCallback(
@@ -50,6 +56,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
     },
     [currentUser, loginModal, project.id, router]
   );
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    setDeletingId(project.id);
+    try {
+      const { data } = await axios.delete(`/api/project/${project.id}`);
+      router.refresh();
+      toast.success(data.message);
+    } catch (error) {
+      toast.error("Some error occured! Please try again");
+    } finally {
+      setDeletingId("");
+    }
+  };
   return (
     <div
       className="flex flex-col gap-2 flex-1 col-span-1 cursor-pointer"
@@ -101,8 +122,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, currentUser }) => {
             </div>
           </div>
         </div>
-        <span className=" text-xs  text-neutral-300">{date}</span>
+        <div className="flex items-center flex-wrap gap-4 justify-between">
+          <span className=" text-xs  text-neutral-300">{date}</span>
+        </div>
       </div>
+      {deleteActionLabel && (
+        <button
+          disabled={deletingId === project.id}
+          className="text-white disabled:bg-rose-400 disabled:cursor-not-allowed font-medium bg-rose-500 px-3 py-2 hover:bg-rose-700 transition rounded-lg outline-none"
+          onClick={handleDelete}
+        >
+          {deleteActionLabel}
+        </button>
+      )}
     </div>
   );
 };

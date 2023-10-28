@@ -1,9 +1,10 @@
 "use client";
 import { SafeComment, SafeUser } from "@/app/types";
+import { daysAgo } from "@/app/utils/giveDate";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineDelete } from "react-icons/ai";
 import { PiUserCircleLight } from "react-icons/pi";
@@ -22,7 +23,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   const handleDelete = useCallback(async () => {
     setIsDeleting(true);
     try {
-      const { data } = await axios.delete(`/api/project/${comment.id}`);
+      const { data } = await axios.delete(`/api/comment/${comment.id}`);
       router.refresh();
       toast.success(data.message);
     } catch (error) {
@@ -31,6 +32,9 @@ const CommentCard: React.FC<CommentCardProps> = ({
       setIsDeleting(false);
     }
   }, [comment.id, router]);
+  const agoTimeStamp = useMemo(() => {
+    return daysAgo(comment.createdAt);
+  }, [comment.createdAt]);
   return (
     <div className="flex flex-col gap-2 border-b-2 border-zinc-300 p-3">
       <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -46,7 +50,12 @@ const CommentCard: React.FC<CommentCardProps> = ({
           ) : (
             <PiUserCircleLight size={30} />
           )}
-          <span className="text-sm text-neutral-300">{comment.User.name}</span>
+          <div className="flex flex-col gap-2">
+            <span className="text-sm text-neutral-300">
+              {comment.User.name}
+            </span>
+            <span className="text-sm text-neutral-300">{agoTimeStamp}</span>
+          </div>
         </div>
 
         {comment.User.id === currentUserId && (

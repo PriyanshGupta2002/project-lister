@@ -5,8 +5,9 @@ import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { Adapter } from "next-auth/adapters";
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(primsaClient),
+  adapter: <Adapter>PrismaAdapter(primsaClient),
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
